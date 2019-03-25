@@ -35,6 +35,7 @@ import gin.tf
 slim = tf.contrib.slim
 
 
+
 @gin.configurable
 class ImplicitQuantileAgent(rainbow_agent.RainbowAgent):
   """An extension of Rainbow to perform implicit quantile regression."""
@@ -151,7 +152,14 @@ class ImplicitQuantileAgent(rainbow_agent.RainbowAgent):
     # Vals for Quantile .2  Vals for Quantile .4  Vals for Quantile .6
     #    [[0.1, 0.5],         [0.15, -0.3],          [0.15, -0.2]]
     # Q-values = [(0.1 + 0.15 + 0.15)/3, (0.5 + 0.15 + -0.2)/3].
+
+
+
+
+    # TODO: implement distortion metrics
+
     self._q_values = tf.reduce_mean(self._net_outputs.quantile_values, axis=0)
+
     self._q_argmax = tf.argmax(self._q_values, axis=0)
 
     self._replay_net_outputs = self.online_convnet(self._replay.states,

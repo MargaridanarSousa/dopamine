@@ -179,10 +179,18 @@ def implicit_quantile_network(num_actions, quantile_embedding_dim,
 
   batch_size = state_net.get_shape().as_list()[0]
   quantiles_shape = [num_quantiles * batch_size, 1]
+
+  #TODO: Take other distributions!
+
+  eta=tf.constant(0.1,dtype=tf.float32)
+
+
   quantiles = tf.random_uniform(
       quantiles_shape, minval=0, maxval=1, dtype=tf.float32)
-
+  quantiles=tf.math.scalar_mul(eta,quantiles)
   quantile_net = tf.tile(quantiles, [1, quantile_embedding_dim])
+
+
   pi = tf.constant(math.pi)
   quantile_net = tf.cast(tf.range(
       1, quantile_embedding_dim + 1, 1), tf.float32) * pi * quantile_net
